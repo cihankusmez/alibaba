@@ -14,6 +14,7 @@
 <div class="card">
     <div class="card-body">
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newAnimalsModal">Yeni Hayvan Ekle</button>
+        <form id="animals_table">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -27,7 +28,8 @@
             <tbody>
                 <cfset qAnimalsLoop = animalsDao.getAnimalsLoop(qAnimals)>
             </tbody>
-      </table>
+        </table>
+      </form>
     </div>
   </div>
 
@@ -117,6 +119,49 @@
 
                   modal.hide();
 
+                  $.ajax({
+                    type: "GET",
+                    url: "./ajax_animals.cfc?method=getFormData",
+                    success: function(response) {
+                      console.log(response)
+                      $("tbody").html(response);
+                    },
+                    error: function(xhr, status, error) {
+                      console.log(xhr);  
+                      console.log(status);  
+                      console.log(error);  
+                      $('#response').html(xhr.responseText);
+                    }
+                  });
+
+                } else {
+                  console.log("error");
+                  console.log(response);
+                }
+            },
+            error: function(xhr, status, error) {
+              console.log(xhr);  
+              console.log(status);  
+              console.log(error);  
+              $('#response').html(xhr.responseText);
+            }
+        });
+    });
+
+    $('#animals_table').on('click', '.delete_button', function() {
+      var delete_id = $(this).data('id');
+      //console.log(delete_id);
+
+      $.ajax({
+            type: "POST",
+            url: "./ajax_animals.cfc?method=deleteData",
+            data: { delete_id : delete_id },
+            success: function(response) {
+              console.log(response);
+               var r = JSON.parse(response);
+               console.log(r);     
+                if(r['STATUS'] == "success")
+                {
                   $.ajax({
                     type: "GET",
                     url: "./ajax_animals.cfc?method=getFormData",

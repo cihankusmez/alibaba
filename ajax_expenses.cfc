@@ -10,20 +10,18 @@
                 </cfloop>
 
                 <cfset userId = trim(parsedData.inputUserId)>
-                <cfset animalTypeId = trim(parsedData.inputAnimalTypeId)>
-                <cfset earringId = trim(parsedData.inputEarringId)>
-                <cfset lastHealthCheck = CreateODBCDateTime(parsedData.inputLastHealthCheck)>
-                <cfset nextHealthCheck = CreateODBCDateTime(parsedData.inputNextHealthCheck)>
+                <cfset expenseDescription = trim(parsedData.inputExpenseDescription)>
+                <cfset amount = trim(parsedData.inputAmount)>
+
                 <cfset createdAt = CreateODBCDateTime( now() )>
+
                 <cfquery datasource="alibaba">
-                    INSERT INTO Animals (UserId, AnimalTypeId, EarringId, LastHealthCheck, NextHealthCheck, CreatedAt) 
+                    INSERT INTO Expenses (UserId, ExpenseDescription, Amount, CreatedAt) 
                     VALUES 
                     (
                         <cfqueryparam value="#userId#" cfsqltype="CF_SQL_INTEGER" >, 
-                        <cfqueryparam value="#animalTypeId#" cfsqltype="CF_SQL_INTEGER">,
-                        <cfqueryparam value="#earringId#" cfsqltype="CF_SQL_INTEGER">,
-                        <cfqueryparam value="#lastHealthCheck#" cfsqltype="CF_SQL_DATE">,
-                        <cfqueryparam value="#nextHealthCheck#" cfsqltype="CF_SQL_DATE">,
+                        <cfqueryparam value="#expenseDescription#" cfsqltype="CF_SQL_VARCHAR">,
+                        <cfqueryparam value="#amount#" cfsqltype="CF_SQL_DECIMAL" >,
                         <cfqueryparam value="#createdAt#" cfsqltype="CF_SQL_DATE">
                     )
                 </cfquery>
@@ -47,13 +45,13 @@
             <cftry> 
                 <cfset var result = {}>   
 
-                <cfset animalsDao = createObject("component", "data/animals")>
-                <cfset qAnimals = animalsDao.getAnimals()>
-                <cfset qAnimalsLoop = animalsDao.getAnimalsLoop(qAnimals)>
+                <cfset expensesDao = createObject("component", "data/expenses")>
+                <cfset qExpenses = expensesDao.getExpenses()>
+                <cfset qExpensesLoop = expensesDao.getExpensesLoop(qExpenses)>
 
                 <cfset result.status = "success">
                 <cfset result.message = "Veri başarıyla eklendi.">
-                <cfset result.view = qAnimalsLoop>
+                <cfset result.view = qExpensesLoop>
                 
                 <cfreturn result>
 
@@ -71,7 +69,7 @@
         <cfargument name="delete_id" type="integer" required="true">
         <cftry>  
             <cfquery name="deleteQuery" datasource="alibaba">
-                DELETE FROM Animals
+                DELETE FROM Expenses
                 WHERE Id = <cfqueryparam value="#delete_id#" cfsqltype="cf_sql_integer">
             </cfquery>
 

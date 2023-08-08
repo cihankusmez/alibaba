@@ -3,7 +3,7 @@
     <cffunction name="getAnimals" access="public" returntype="query">
 
         <cfquery name="qAnimals" datasource="alibaba">
-            select * from Animals
+            select Animals.Id as AnimalId, * from Animals
             left join Users
             on Users.Id = Animals.UserId
             left join AnimalTypes
@@ -24,8 +24,8 @@
                     <td>#nextHealthCheck#</td>                    
                     <td>#qAnimals.Username#</td>
                     <td>
-                        <a class="btn btn-secondary">Düzenle</a>
-                        <btn class="btn btn-secondary btn-danger">Sil</btn>
+                        <button type="button" data-id="#qAnimals.AnimalId#" class="btn btn-secondary edit_button">Düzenle</button>
+                        <button type="button" data-id="#qAnimals.AnimalId#" class="btn btn-secondary btn-danger delete_button">Sil</button>
                     </td>                   
                 </tr>
             </cfoutput>

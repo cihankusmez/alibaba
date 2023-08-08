@@ -62,6 +62,26 @@
                 </cfcatch>
             </cftry>
         </cffunction>
+
+        <cffunction name="deleteData" access="remote" returnFormat="json">
+            <cfargument name="delete_id" type="integer" required="true">
+            <cftry>  
+                <cfquery name="deleteQuery" datasource="alibaba">
+                    DELETE FROM MilkRecords
+                    WHERE Id = <cfqueryparam value="#delete_id#" cfsqltype="cf_sql_integer">
+                </cfquery>
+
+                <cfset result.status = "success">
+                <cfset result.message = "Veri başarıyla silindi.">
+                <cfset result.delete_id = delete_id>
+                <cfreturn result>
+            <cfcatch type="any">
+                <cfset result.status = "fail">
+                <cfset result.message = "Veri eklenirken hata oluştu.">
+                <cfset result.error = cfcatch.message>
+            </cfcatch>
+        </cftry>
+        </cffunction>
 </cfcomponent>
 
 

@@ -3,12 +3,12 @@
     <cffunction name="getMilkRecords" access="public" returntype="query">
 
         <cfquery name="qMilkRecords" datasource="alibaba">
-            select * from MilkRecords
-            left join Users
-            on Users.Id = MilkRecords.UserId
-            left join AnimalTypes
-            on AnimalTypes.Id = MilkRecords.MilkTypeId
-            order by MilkRecords.Id desc
+            select m.Id as MilkRecordId, * from MilkRecords m
+            left join Users u
+            on u.Id = m.UserId
+            left join AnimalTypes t
+            on t.Id = m.MilkTypeId
+            order by m.Id desc
         </cfquery>
         
         <cfreturn qMilkRecords>
@@ -24,8 +24,8 @@
                     <td>#createdAt#</td>                    
                     <td>#qMilkRecords.Username#</td>
                     <td>
-                        <a class="btn btn-secondary">Düzenle</a>
-                        <btn class="btn btn-secondary btn-danger">Sil</btn>
+                        <button type="button" data-id="#qMilkRecords.MilkRecordId#" class="btn btn-secondary edit_button">Düzenle</button>
+                        <button type="button" data-id="#qMilkRecords.MilkRecordId#" class="btn btn-secondary btn-danger delete_button">Sil</button>
                     </td>                   
                 </tr>
             </cfoutput>
