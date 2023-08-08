@@ -100,7 +100,7 @@
         
         $.ajax({
             type: "POST",
-            url: "./ajax.cfc?method=saveFormData",
+            url: "./ajax_milk.cfc?method=saveFormData",
             data: { formData : formData },
             success: function(response) {
               var r = JSON.parse(response);     
@@ -113,7 +113,7 @@
 
                   $.ajax({
                     type: "GET",
-                    url: "./ajax.cfc?method=getFormData",
+                    url: "./ajax_milk.cfc?method=getFormData",
                     success: function(response) {
                       console.log(response)
                       $("tbody").html(response);
