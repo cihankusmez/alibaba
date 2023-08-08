@@ -18,20 +18,22 @@
             Yeni Süt Üretimi Ekle
           </button>
           <form id="milk_records_table">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <td>Sütün Cinsi</td>
-                        <td>Toplam Miktar</td>
-                        <td>Tarih</td>
-                        <td>Sorumlu</td>
-                        <td>Aksiyon</td>
-                    </tr>
-                </thead>
-                <tbody>
-                  <cfset qMilkRecordsLoop = milkRecordsDao.getMilkRecordsLoop(qMilkRecords)>
-                </tbody>
-          </table>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                  <thead>
+                      <tr>
+                          <td>Sütün Cinsi</td>
+                          <td>Toplam Miktar</td>
+                          <td>Tarih</td>
+                          <td>Sorumlu</td>
+                          <td>Aksiyon</td>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <cfset qMilkRecordsLoop = milkRecordsDao.getMilkRecordsLoop(qMilkRecords)>
+                  </tbody>
+              </table>
+            </div>
         </form>
     </div>
   </div>

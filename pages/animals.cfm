@@ -15,20 +15,22 @@
     <div class="card-body">
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newAnimalsModal">Yeni Hayvan Ekle</button>
         <form id="animals_table">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <td>Hayvan Cinsi</td>
-                    <td>Küpe No</td>
-                    <td>Muayene Tarihi</td>
-                    <td>Sorumlu</td>
-                    <td>Aksiyon</td>
-                </tr>
-            </thead>
-            <tbody>
-                <cfset qAnimalsLoop = animalsDao.getAnimalsLoop(qAnimals)>
-            </tbody>
-        </table>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <td>Hayvan Cinsi</td>
+                        <td>Küpe No</td>
+                        <td>Muayene Tarihi</td>
+                        <td>Sorumlu</td>
+                        <td>Aksiyon</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <cfset qAnimalsLoop = animalsDao.getAnimalsLoop(qAnimals)>
+                </tbody>
+            </table>
+          </div>
       </form>
     </div>
   </div>

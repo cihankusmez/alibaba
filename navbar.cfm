@@ -1,5 +1,5 @@
 <cfprocessingdirective pageencoding="utf-8">
-
+<cfset searchKeyword = structKeyExists(url, "q") ? trim(url.q) : "">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="/alibaba/">FarmerApp</a>
@@ -21,8 +21,9 @@
             <a class="nav-link" href="/alibaba/?action=expenses">Giderler</a>
           </li>
         </ul>
-        <form class="d-flex" action="/alibaba/?action=animals">
-          <input class="form-control me-2" type="search" placeholder="Hayvan Küpe No Giriniz" aria-label="Search">
+        <form method="GET" class="d-flex" action="/alibaba/?action=animals">
+          <input type="hidden" name="action" value="animals">
+          <input class="form-control me-2" type="search" name="q" placeholder="Hayvan Küpe No Giriniz" aria-label="Search" value="<cfoutput>#searchKeyword#</cfoutput>">
           <button class="btn btn-outline-success" type="submit">Ara</button>
         </form>
       </div>

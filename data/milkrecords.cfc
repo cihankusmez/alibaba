@@ -24,8 +24,8 @@
                     <td>#createdAt#</td>                    
                     <td>#qMilkRecords.Username#</td>
                     <td>
-                        <button type="button" data-id="#qMilkRecords.MilkRecordId#" class="btn btn-secondary edit_button">Düzenle</button>
-                        <button type="button" data-id="#qMilkRecords.MilkRecordId#" class="btn btn-secondary btn-danger delete_button">Sil</button>
+                        <button type="button" data-id="#qMilkRecords.MilkRecordId#" class="btn btn-secondary edit_button m-1">Düzenle</button>
+                        <button type="button" data-id="#qMilkRecords.MilkRecordId#" class="btn btn-secondary btn-danger delete_button m-1">Sil</button>
                     </td>                   
                 </tr>
             </cfoutput>
