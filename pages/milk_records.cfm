@@ -1,13 +1,7 @@
 <cfprocessingdirective pageencoding="utf-8">
 
-<cfquery name="qMilkRecords" datasource="alibaba" result="r">
-    select * from MilkRecords
-    left join Users
-    on Users.Id = MilkRecords.UserId
-    left join AnimalTypes
-    on AnimalTypes.Id = MilkRecords.MilkTypeId
-    order by MilkRecords.Id desc
-</cfquery>
+<cfset milkRecordsDao = createObject("component", "data/milkrecords")>
+<cfset qMilkRecords = milkRecordsDao.getMilkRecords()>
 
 <cfquery name="qAnimalTypes" datasource="alibaba" result="r">
     select * from AnimalTypes
@@ -34,20 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <cfloop query="qMilkRecords">
-                    <cfoutput>
-                        <tr>
-                            <td>#qMilkRecords.AnimalTypeName#</td>
-                            <td>#DecimalFormat(qMilkRecords.Amount)#</td>                    
-                            <td>#qMilkRecords.CreatedAt.dateFormat( 'mm/dd/yyyy' )#</td>                    
-                            <td>#qMilkRecords.Username#</td>
-                            <td>
-                                <a class="btn btn-secondary">Düzenle</a>
-                                <btn class="btn btn-secondary btn-danger">Sil</btn>
-                            </td>                   
-                        </tr>
-                    </cfoutput>
-                </cfloop>
+              <cfset qMilkRecordsLoop = milkRecordsDao.getMilkRecordsLoop(qMilkRecords)>
             </tbody>
       </table>
     </div>
@@ -114,7 +95,7 @@
   </div>
 
   <script>
-    $("#create_milk_records_button").click(function(event) {
+    $("body").on('click', '#create_milk_records_button',function(event) {
         var formData = $('#milk_form').serialize();
         
         $.ajax({
@@ -122,14 +103,29 @@
             url: "./ajax.cfc?method=saveFormData",
             data: { formData : formData },
             success: function(response) {
-              var r = JSON.parse(response);              
-
+              var r = JSON.parse(response);     
                 if(r['STATUS'] == "success")
                 {
                   var myModal = document.getElementById('newMilkRecordsModal');
                   var modal = bootstrap.Modal.getOrCreateInstance(myModal);
 
                   modal.hide();
+
+                  $.ajax({
+                    type: "GET",
+                    url: "./ajax.cfc?method=getFormData",
+                    success: function(response) {
+                      console.log(response)
+                      $("tbody").html(response);
+                    },
+                    error: function(xhr, status, error) {
+                      console.log(xhr);  
+                      console.log(status);  
+                      console.log(error);  
+                      $('#response').html(xhr.responseText);
+                    }
+                  });
+
                 } else {
                   console.log("error");
                   console.log(response);
