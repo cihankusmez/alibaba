@@ -1,11 +1,12 @@
 <cfcomponent>
     <cfprocessingdirective pageencoding="utf-8">
     <cffunction name="getAnimals" access="public" returntype="query">
+        <cfargument name="limit" default="1000" type="integer">
 
         <cfset searchKeyword = structKeyExists(url, "q") ? trim(url.q) : "">
 
         <cfquery name="qAnimals" datasource="alibaba">
-            select Animals.Id as AnimalId, * from Animals
+            select TOP #limit# Animals.Id as AnimalId, * from Animals
             left join Users
             on Users.Id = Animals.UserId
             left join AnimalTypes

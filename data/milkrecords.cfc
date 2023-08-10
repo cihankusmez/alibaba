@@ -1,9 +1,10 @@
 <cfcomponent>
     <cfprocessingdirective pageencoding="utf-8">
     <cffunction name="getMilkRecords" access="public" returntype="query">
+        <cfargument name="limit" default="1000" type="integer">
 
         <cfquery name="qMilkRecords" datasource="alibaba">
-            select m.Id as MilkRecordId, * from MilkRecords m
+            select TOP #limit# m.Id as MilkRecordId, * from MilkRecords m
             left join Users u
             on u.Id = m.UserId
             left join AnimalTypes t

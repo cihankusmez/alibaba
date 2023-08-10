@@ -1,9 +1,10 @@
 <cfcomponent>
     <cfprocessingdirective pageencoding="utf-8">
     <cffunction name="getExpenses" access="public" returntype="query">
+        <cfargument name="limit" default="1000" type="integer">
 
         <cfquery name="qExpenses" datasource="alibaba">
-            select Expenses.Id as ExpenseId, * from Expenses
+            select TOP #limit# Expenses.Id as ExpenseId, * from Expenses
             left join Users
             on Users.Id = Expenses.UserId
             order by Expenses.Id desc
