@@ -20,7 +20,7 @@
                     VALUES 
                     (
                         <cfqueryparam value="#userId#" cfsqltype="CF_SQL_INTEGER" >, 
-                        <cfqueryparam value="#expenseDescription#" cfsqltype="CF_SQL_VARCHAR">,
+                        <cfqueryparam value="#expenseDescription#" cfsqltype="CF_SQL_NVARCHAR">,
                         <cfqueryparam value="#amount#" cfsqltype="CF_SQL_DECIMAL" >,
                         <cfqueryparam value="#createdAt#" cfsqltype="CF_SQL_DATE">
                     )

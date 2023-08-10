@@ -76,9 +76,9 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <td>Cinsi</td>
-                                <td>Miktar</td>
                                 <td>Tarih</td>
+                                <td>Açıklama</td>
+                                <td>Tutar</td>
                             </tr>
                         </thead>
                         <tbody>
