@@ -14,6 +14,8 @@
 <div class="card">
     <div class="card-body">
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newAnimalsModal">Yeni Hayvan Ekle</button>
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newBulkAnimalsModal">Toplu Excel Yükleme</button>
+
         <form id="animals_table">
           <div class="table-responsive">
             <table class="table table-striped table-hover">
@@ -34,7 +36,31 @@
       </form>
     </div>
   </div>
-
+  
+  <div class="modal fade" id="newBulkAnimalsModal" tabindex="-1" aria-labelledby="newBulkAnimalsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="newBulkAnimalsModalLabel">Toplu Hayvan Yükle</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="uploadForm" enctype="multipart/form-data" class="mb-2">
+            <div class="input-group mb-3">
+              <input id="file" type="file" name="excelFile" class="form-control" id="excelFile" accept=".xls, .xlsx" required>
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-secondary">Yükle</button>
+              </div>
+            </div>  
+          </form>
+          <div id="loading" style="display: none;">
+              <img src="loading.gif" alt="Yükleniyor..."> Yükleniyor...
+          </div>          
+          <div id="excel_response"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
    <!-- Modal -->
 <div class="modal fade" id="newAnimalsModal" tabindex="-1" aria-labelledby="newAnimalsModalLabel" aria-hidden="true">
@@ -104,6 +130,32 @@
   </div>
 
   <script>
+      $(document).ready(function() {
+          $("#uploadForm").submit(function(e) {
+              $("#loading").show();
+              e.preventDefault();
+              var form = new FormData(this);
+              $.ajax({
+                  url: "./ajax_excel_upload.cfc?method=uploadAnimal",
+                  type: "POST",
+                  data: form,
+                  processData: false,
+                  contentType: false,
+                  success: function(response) {
+                      $("#excel_response").html(response);
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.log(jqXHR);
+                      $("#excel_response").html(jqXHR.responseText);
+                      console.log("Hata: " + errorThrown);
+                  },
+                  complete: function() {
+                      $("#loading").hide();
+                  }
+              });
+          });
+      });
+
     $("body").on('click', '#create_animals_button',function(event) {
         var formData = $('#animal_form').serialize();
         //console.log(formData);
